@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.SingleMapper">
+    <!--    `name`, `author`, `press`, `price`-->
+    <!--增-->
+    <!--增-->
+    <insert id="addBook" parameterType="book">
+        insert into `ssm-library`.user_lib(name, author, press, price)
+        values (#{name}, #{author}, #{press}, #{price})
+    </insert>
+
+    <!--删-->
+    <delete id="deleteBook" parameterType="int">
+        delete
+        from `ssm-library`.user_lib
+        where bookId = #{bookId}
+    </delete>
+
+    <!--改-->
+    <update id="updateBook" parameterType="book">
+        update `ssm-library`.user_lib
+        set name=#{name},
+        author=#{author},
+        press=#{press},
+        price=#{price}
+        where bookId = #{bookId}
+    </update>
+
+
+    <!--根据name查一个-->
+    <select id="queryUserByName" resultType="User" parameterType="String">
+        select *
+        from `ssm-library`.user
+        where username = #{username}
+    </select>
+
+
+    <!--改-->
+    <update id="updateUser" parameterType="User">
+        update `ssm-library`.user
+        set password=#{password},
+        money =#{money}
+        where username = #{username}
+    </update>
+
+
+    <!--查所有-->
+    <select id="queryAllBook" resultType="book">
+        select *
+        from `ssm-library`.user_lib
+    </select>
+
+    <!--根据id查一个-->
+    <select id="queryBookById" resultType="book" parameterType="int">
+        select *
+        from `ssm-library`.user_lib
+        where bookId = #{bookId}
+    </select>
+
+    <!--根据name查all-->
+    <select id="queryBookByName" resultType="book" parameterType="String">
+        select *
+        from `ssm-library`.user_lib
+        where NAME = #{BookName}
+    </select>
+
+
+    <insert id="addBookbyBook" parameterType="book">
+        insert into `ssm-library`.user_lib(name, author, press, price, bootnum)
+        values (#{name}, #{author}, #{press}, #{price})
+    </insert>
+
+
+    <!--根据条件查询-->
+    <select id="conditionQuery" resultType="Book" parameterType="Book">
+        select * from `ssm-library`.user_lib
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+            <if test="author != null and author != ''">
+                and author=#{author}
+            </if>
+            <if test="press != null and press != ''">
+                and press=#{press}
+            </if>
+        </where>
+    </select>
+
+    <select id="ListQuery" resultType="Book">
+        select * from `ssm-library`.user_lib where NAME like '%#{value}%'
+    </select>
+
+
+    <!--    增减图书的数量-->
+    <!--    如何选择合适的sql语句进行修改-->
+    <!--删-->
+    <delete id="addBookNum" parameterType="int">
+        delete
+        from `ssm-library`.user_lib
+        where NAME = #{BookName}
+    </delete>
+
+
+</mapper>

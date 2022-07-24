@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.UserMapper">
+
+    <select id="logincheck" parameterType="user" resultType="user">
+        select *
+        from `ssm-library`.user
+        <where>
+            <if test="username != null and username != ''">
+                and `username` = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                AND `password` = #{password}
+            </if>
+        </where>
+    </select>
+
+    <select id="checkUserName" parameterType="String" resultType="String">
+        select *
+        from `ssm-library`.user
+        <where>
+            <if test="username != null and username != ''">
+                AND `username` = #{username}
+            </if>
+        </where>
+    </select>
+
+    <insert id="register" parameterType="user">
+        insert into `ssm-library`.user(username, password)
+        value (#{username},#{password})
+    </insert>
+
+    <select id="getUserByName" parameterType="String" resultType="user">
+        select * from `ssm-library`.user where username=#{username}
+
+    </select>
+
+    <select id="getAllUser" resultType="user">
+        select * from `ssm-library`.user
+    </select>
+
+
+    <!--根据条件查询-->
+    <select id="conditionQuery" resultType="user" parameterType="user">
+        select * from `ssm-library`.user
+        <where>
+            <if test="name != null and name != ''">
+                username = #{username}
+            </if>
+            <if test="author != null and author != ''">
+                and password=#{password}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
